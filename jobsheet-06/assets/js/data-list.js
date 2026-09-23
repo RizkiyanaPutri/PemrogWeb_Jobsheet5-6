@@ -7,8 +7,7 @@ async function muatDaftarData(urlJson, daftarKunci) {
     tbody.innerHTML = "";
  
     try {
-        // simulasi delay jaringan agar loading indicator terlihat
-        await new Promise((resolve) => setTimeout(resolve, 600));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
  
         const res = await fetch(urlJson);
         if (!res.ok) {
