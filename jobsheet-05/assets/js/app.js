@@ -23,22 +23,30 @@ function initHapusConfirm() {
     });
 }
 
-// ===== Filter/pencarian tabel real-time =====
 function initTableFilter() {
     const input = document.getElementById("search-input");
     const table = document.querySelector(".table-responsive table");
     if (!input || !table) return;
 
+    const kolomIndex = input.dataset.searchCol !== undefined
+        ? parseInt(input.dataset.searchCol, 10)
+        : -1;
+
     input.addEventListener("keyup", function () {
         const keyword = input.value.toLowerCase();
         const rows = table.querySelectorAll("tbody tr");
         rows.forEach(function (row) {
-            const teks = row.textContent.toLowerCase();
+            let teks;
+            if (kolomIndex >= 0) {
+                const sel = row.querySelectorAll("td")[kolomIndex];
+                teks = sel ? sel.textContent.toLowerCase() : "";
+            } else {
+                teks = row.textContent.toLowerCase();
+            }
             row.style.display = teks.includes(keyword) ? "" : "none";
         });
     });
 }
-
 // ===== Validasi form (client-side) =====
 function tampilkanError(input, pesan) {
     hapusError(input);
